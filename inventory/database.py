@@ -14,15 +14,15 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
 
-def get_db():
+def get_db_inventory():
     """
     create session: creating session locally
     """
-    db = SessionLocal()
+    db_inv = SessionLocal()
     try:
-        yield db
+        yield db_inv
     finally:
-        db.close()
+        db_inv.close()
 
 
 """

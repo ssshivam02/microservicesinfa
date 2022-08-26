@@ -2,9 +2,9 @@ from fastapi import FastAPI, Depends, HTTPException, status, Response
 from fastapi.middleware.cors import CORSMiddleware
 from . import models
 from sqlalchemy.orm import Session
-from inventory.database import engine, get_db
-from inventory.models import Product_Table
-from inventory.schemas import Product_Schemas, Product_Schemas_Out
+from .database import engine, get_db_inventory
+from .models import Product_Table
+from .schemas import Product_Schemas, Product_Schemas_Out
 
 app = FastAPI()
 origins = [
@@ -24,12 +24,12 @@ models.Base.metadata.create_all(bind=engine)
 
 
 @app.get("/")
-async def root(db: Session = Depends(get_db)):
+async def root(db: Session = Depends(get_db_inventory)):
     return {"message": " Hello World! "}
 
 
 @app.get("/products")
-def all(db: Session = Depends(get_db)):
+def all(db: Session = Depends(get_db_inventory)):
     # this will result all row with selected column
     # resall = db.query(Product_Table.name, Product_Table.quantity).all()
     # returns exactly one result or raises an exception (0 or more than 1 result)
@@ -37,12 +37,12 @@ def all(db: Session = Depends(get_db)):
     # resone = db.query(Product_Table.name).one_or_none() -->this will show error if in table multi row presnt
     # res_scaler = db.query(Product_Table.name).scalar() --> only need one validation
     # # this will use filter
-    res = db.query(Product_Table).filter(Product_Table.quantity <= 101).all()
+    res = db.query(Product_Table).all()
     return res
 
 
 @app.post("/product/create", response_model=Product_Schemas_Out)
-def creat_product(product: Product_Schemas, db: Session = Depends(get_db)):
+def creat_product(product: Product_Schemas, db: Session = Depends(get_db_inventory)):
     new_product = Product_Table(**product.dict())
     db.add(new_product)
     db.commit()
@@ -50,8 +50,20 @@ def creat_product(product: Product_Schemas, db: Session = Depends(get_db)):
     return new_product
 
 
+@app.get("/product/{id}")
+def get_product_id(id: int, db: Session = Depends(get_db_inventory)):
+    product_query = db.query(Product_Table).filter(Product_Table.id == id).one()
+    post = product_query
+    if post == None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"post with  id: {id} was not found",
+        )
+    return product_query
+
+
 @app.delete("/product/delete/{id}")
-def delete_product(id: str, db: Session = Depends(get_db)):
+def delete_product(id: int, db: Session = Depends(get_db_inventory)):
     product_query = db.query(Product_Table).filter(Product_Table.id == id)
     print("hello")
     post = product_query.first()

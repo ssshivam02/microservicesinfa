@@ -1,0 +1,206 @@
+{
+	"info": {
+		"_postman_id": "e62beec0-3f3d-482a-b39b-ff59eff7ccbd",
+		"name": "fastapiweb",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "payment_order",
+			"item": [
+				{
+					"name": "create_order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"product_id\":90,\r\n    \"price\":100,\r\n    \"fee\" :50,\r\n    \"total\": 150,\r\n    \"quantity\": 5,\r\n    \"status\": \"pending\"\r\n}   ",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ip_address_payment}}order/create",
+							"host": [
+								"{{ip_address_payment}}order"
+							],
+							"path": [
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "hello world",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ip_address_payment}}",
+							"host": [
+								"{{ip_address_payment}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buy product",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":24,\r\n    \"quantity\":5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ip_address_payment}}order",
+							"host": [
+								"{{ip_address_payment}}order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete_order",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{ip_address_payment}}order/delete/90",
+							"host": [
+								"{{ip_address_payment}}order"
+							],
+							"path": [
+								"delete",
+								"90"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "order_id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ip_address_payment}}order/23",
+							"host": [
+								"{{ip_address_payment}}order"
+							],
+							"path": [
+								"23"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "inventory_products",
+			"item": [
+				{
+					"name": "create_products",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"pen\",\r\n    \"price\": 350,\r\n    \"quantity\": 100    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ip_address_inventory}}product/create",
+							"host": [
+								"{{ip_address_inventory}}product"
+							],
+							"path": [
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "product",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ip_address_inventory}}products",
+							"host": [
+								"{{ip_address_inventory}}products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_product_id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ip_address_inventory}}product/2",
+							"host": [
+								"{{ip_address_inventory}}product"
+							],
+							"path": [
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "hello world",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ip_address_inventory}}",
+							"host": [
+								"{{ip_address_inventory}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete_product",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{ip_address}}product/delete/hhkh",
+							"host": [
+								"{{ip_address}}product"
+							],
+							"path": [
+								"delete",
+								"hhkh"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
