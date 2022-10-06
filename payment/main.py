@@ -96,7 +96,6 @@ async def create(
 
 
 def order_completed(body, db, db_inv):
-    print("hello")
     time.sleep(5)  # after 30 sec we can see status is complete
     query = db.query(Order_Table).filter(Order_Table.product_id == body["id"])
     query.update({"status": "completed"}, synchronize_session=False)
